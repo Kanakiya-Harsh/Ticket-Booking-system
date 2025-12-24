@@ -1,9 +1,11 @@
 import React from 'react'
 
-const Event = () => {
+const AdminEvent = () => {
   return (
-    <div>Event</div>
+    <div>
+      <p>Event page admin</p>
+    </div>
   )
 }
 
-export default Event
+export default AdminEvent

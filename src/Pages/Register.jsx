@@ -41,9 +41,8 @@ const Register = () => {
     };
 
     const handleSubmit = async () => {
-        if(!validate()) return;
-       const res = await Apiservice.post("users/add", { ...formData, role: "user" });
-       console.log(res);
+        if (!validate()) return;
+        const res = await Apiservice.post("users/add", { ...formData, role: "user" });
         setFormData({
             name: "",
             email: "",
@@ -53,8 +52,7 @@ const Register = () => {
         setErrors({})
         navigate('/login')
     }
-    
-    
+
     const handleInputchange = (e) => {
         setFormData({
             ...formData,
@@ -65,7 +63,6 @@ const Register = () => {
             [e.target.name]: ""
         })
     }
-    
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-white">
@@ -104,7 +101,7 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
-                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
 
                     </div>
 
@@ -123,7 +120,7 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
 
                     </div>
 
@@ -142,7 +139,7 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
-            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
 
                     </div>
 
@@ -161,7 +158,7 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
 
                     </div>
 
