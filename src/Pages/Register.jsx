@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { Apiservice } from "../services/Apiservice";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,16 +13,59 @@ const Register = () => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log(formData);
-    }
+    // Validation method to check the form validations
+    const validate = () => {
+        const newErrors = {};
+        if (!formData.name.trim()) {
+            newErrors.name = "Full name is required";
+        } else if (formData.name.length <= 3) {
+            newErrors.name = "Minimum 3 characters required";
+        }
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Invalid email format";
+        }
+        if (!formData.phone.trim()) {
+            newErrors.phone = "Mobile number is required";
+        } else if (!/^[0-9]{10}$/.test(formData.phone)) {
+            newErrors.phone = "Enter 10 digit number";
+        }
+        if (!formData.password.trim()) {
+            newErrors.password = "Password is required";
+        } else if (formData.password.length < 6) {
+            newErrors.password = "Minimum 6 characters required";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
+    const handleSubmit = async () => {
+        if(!validate()) return;
+       const res = await Apiservice.post("users/add", { ...formData, role: "user" });
+       console.log(res);
+        setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            password: ""
+        })
+        setErrors({})
+        navigate('/login')
+    }
+    
+    
     const handleInputchange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
+        setErrors({
+            ...errors,
+            [e.target.name]: ""
+        })
     }
+    
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-white">
@@ -43,7 +87,7 @@ const Register = () => {
                 </p>
 
                 {/* Form */}
-                <form className="mt-6 space-y-4">
+                <form className="mt-6 space-y-4" >
 
                     {/* Full Name */}
                     <div>
@@ -60,6 +104,8 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
+                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+
                     </div>
 
                     {/* Email */}
@@ -77,6 +123,8 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+
                     </div>
 
                     {/* Mobile */}
@@ -94,6 +142,8 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+
                     </div>
 
                     {/* Password */}
@@ -111,6 +161,8 @@ const Register = () => {
                                 className="w-full pl-4 pr-4 py-3 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400"
                             />
                         </div>
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+
                     </div>
 
                     {/* Button */}
