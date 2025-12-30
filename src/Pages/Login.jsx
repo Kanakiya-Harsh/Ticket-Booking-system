@@ -42,7 +42,7 @@ const Login = () => {
     if (!validate()) return;
     try {
       const res = await Apiservice.post("user/login", { ...form, role });
-      localStorage.setItem("authData",JSON.stringify(res))
+      localStorage.setItem("authData",JSON.stringify(res.data))
       console.log(res)
       navigate('/');
     } catch (error) {
